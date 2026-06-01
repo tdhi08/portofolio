@@ -1,1 +1,1 @@
-Run both scripts simultaneously to run program 
+Run both scripts simultaneously to run program. This one is a bit messy, but it works.
