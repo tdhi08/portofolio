@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #c8f060;
+      --accent-dim: #a3c94a;
+      --text: #f0ede8;
+      --muted: #888;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.8rem; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+ 
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1200px; width: 100%;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 4px 12px; border-radius: 999px;
+      margin-bottom: 1.5rem; letter-spacing: 0.08em;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 800; line-height: 1.0;
+      letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-bio {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-mono); font-size: 0.8rem;
+      letter-spacing: 0.05em; font-weight: 500;
+      border-radius: 6px; text-decoration: none;
+      transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0d0d0d;
+    }
+    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--text); transform: translateY(-2px); }
+ 
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: #444; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem; font-weight: 800;
+      color: var(--accent); line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--muted); letter-spacing: 0.06em;
+    }
+ 
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--accent); letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+    }
+ 
+    /* ── SKILLS ── */
+    #skills { border-top: 1px solid var(--border); }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .skill-pill {
+      font-family: var(--font-mono); font-size: 0.8rem;
+      padding: 0.5rem 1.25rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 999px; color: var(--text);
+      transition: all 0.2s;
+    }
+    .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+    .skill-pill.accent { background: rgba(200,240,96,0.1); border-color: var(--accent); color: var(--accent); }
+ 
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--border); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { border-color: #555; transform: translateY(-4px); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .project-icon { font-size: 1.8rem; }
+    .project-links { display: flex; gap: 0.5rem; }
+    .project-link {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .project-link:hover { color: var(--text); border-color: #555; }
+    .project-name {
+      font-family: var(--font-display); font-size: 1.25rem;
+      font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .project-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      padding: 3px 10px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 4px; color: var(--muted);
+    }
+ 
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); }
+    .contact-inner {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 2rem;
+    }
+    .contact-text .section-title { margin-bottom: 0.5rem; }
+    .contact-text p { color: var(--muted); max-width: 400px; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 12px;
+      color: var(--text); text-decoration: none; font-size: 0.95rem;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      transition: all 0.2s; min-width: 220px;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-link-icon { font-size: 1.1rem; }
+ 
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      text-align: center;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--muted);
+    }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .contact-inner { flex-direction: column; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">YN.</a>
+    <ul class="nav-links">
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-tag">available for hire</span>
+        <h1 class="hero-title">
+          Hi, I'm<br />
+          <span>Your Name</span>
+        </h1>
+        <p class="hero-bio">
+          A passionate developer building things for the web. I love clean code,
+          thoughtful design, and turning ideas into real products.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View my work ↓</a>
+          <a href="#contact" class="btn btn-outline">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">PROJECTS BUILT</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">YEARS CODING</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">TECHNOLOGIES</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">CURIOSITY</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// what I work with</p>
+    <h2 class="section-title">Skills & Tools</h2>
+    <div class="skills-grid">
+      <span class="skill-pill accent">JavaScript</span>
+      <span class="skill-pill accent">Python</span>
+      <span class="skill-pill">React</span>
+      <span class="skill-pill">Node.js</span>
+      <span class="skill-pill">HTML & CSS</span>
+      <span class="skill-pill">Git & GitHub</span>
+      <span class="skill-pill">SQL</span>
+      <span class="skill-pill">REST APIs</span>
+      <span class="skill-pill">VS Code</span>
+      <span class="skill-pill">Figma</span>
+      <!-- Add more skills here -->
+    </div>
+  </section>
+ 
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// things I've built</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🛒</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+            <a href="#" class="project-link">Live ↗</a>
+          </div>
+        </div>
+        <h3 class="project-name">Project One</h3>
+        <p class="project-desc">
+          A brief description of what this project does, the problem it solves,
+          and what you learned building it.
+        </p>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">MongoDB</span>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">📊</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+            <a href="#" class="project-link">Live ↗</a>
+          </div>
+        </div>
+        <h3 class="project-name">Project Two</h3>
+        <p class="project-desc">
+          Describe the project here. What tech did you use? What was
+          the challenge? Keep it to 2–3 sentences.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🤖</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <h3 class="project-name">Project Three</h3>
+        <p class="project-desc">
+          Another cool thing you built. What problem did it solve? Who
+          was it for? Feel free to be conversational here.
+        </p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">REST API</span>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <p class="section-label">// let's talk</p>
+        <h2 class="section-title">Get In Touch</h2>
+        <p>Open to new opportunities, collaborations, or just a friendly chat about tech.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:you@email.com" class="contact-link">
+          <span class="contact-link-icon">✉️</span> you@email.com
+        </a>
+        <a href="https://github.com/yourusername" class="contact-link" target="_blank">
+          <span class="contact-link-icon">💻</span> github.com/yourusername
+        </a>
+        <a href="https://linkedin.com/in/yourusername" class="contact-link" target="_blank">
+          <span class="contact-link-icon">🔗</span> linkedin.com/in/yourusername
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <p>built by Your Name · 2025</p>
+  </footer>
+ 
+</body>
+</html>
